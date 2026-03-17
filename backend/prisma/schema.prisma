@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DecisionType {
+  approve
+  reject
+  rework
+  extra_review
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id           String       @id @default(cuid())
+  username     String       @unique
+  email        String       @unique
+  passwordHash String
+  role         UserRole     @default(USER)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  profile      UserProfile?
+  progress     UserProgress?
+  gameResults  GameResult[]
+}
+
+model Case {
+  id                 String         @id
+  level              Int
+  title              String
+  productName        String
+  productVersion     String
+  productType        String
+  productDescription String
+  correctDecision    DecisionType
+  explanation        String
+  topics             String[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  documents          CaseDocument[]
+  issues             CaseIssue[]
+
+  @@index([level])
+  @@index([createdAt])
+}
+
+model CaseDocument {
+  id      String @id
+  caseId  String
+  type    String
+  title   String
+  content String
+  case    Case   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+}
+
+model CaseIssue {
+  id          String @id
+  caseId      String
+  type        String
+  description String
+  case        Case   @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+}
+
+model UserProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  displayName    String
+  avatarUrl      String?
+  totalScore     Int      @default(0)
+  accuracy       Float    @default(0)
+  casesCompleted Int      @default(0)
+  correctAnswers Int      @default(0)
+  currentLevel   Int      @default(1)
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  completedCaseIds String[] @default([])
+  unlockedLevels   Int[]    @default([1])
+  lastPlayedAt     DateTime?
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GameResult {
+  id               String       @id @default(cuid())
+  userId           String
+  caseId           String
+  selectedDecision DecisionType
+  isCorrect        Boolean
+  scoreEarned      Int
+  createdAt        DateTime     @default(now())
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([caseId])
+  @@index([createdAt])
+}
