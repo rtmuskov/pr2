@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { getProfileInfoPayload } from '../services/profile.service.js';
+import { getProfileInfoPayload, saveGameResult } from '../services/profile.service.js';
 
 export async function getProfileInfo(request: Request, response: Response) {
   const currentUserId = request.user?.id;
@@ -22,4 +22,27 @@ export async function getProfileInfo(request: Request, response: Response) {
   }
 
   response.json(payload);
+}
+
+export async function submitGameResult(request: Request, response: Response) {
+  const currentUserId = request.user?.id;
+
+  if (!currentUserId) {
+    response.status(401).json({
+      message: 'Authentication required.',
+    });
+    return;
+  }
+
+  try {
+    const payload = await saveGameResult(currentUserId, request.body);
+    response.status(201).json(payload);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unable to save game result.';
+    const statusCode = message === 'Case not found.' ? 404 : 500;
+
+    response.status(statusCode).json({
+      message,
+    });
+  }
 }

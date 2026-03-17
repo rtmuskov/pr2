@@ -635,6 +635,12 @@ button {
   max-width: 720px;
 }
 
+.case-card-locked-action {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
 .form-stack {
   display: grid;
   gap: 18px;

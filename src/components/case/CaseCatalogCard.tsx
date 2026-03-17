@@ -5,14 +5,15 @@ import type { GameCase } from '../../models/case';
 
 type CaseCatalogCardProps = {
   gameCase: GameCase;
+  locked?: boolean;
 };
 
-export function CaseCatalogCard({ gameCase }: CaseCatalogCardProps) {
+export function CaseCatalogCard({ gameCase, locked = false }: CaseCatalogCardProps) {
   return (
     <article className="panel-card case-catalog-card">
       <div className="case-catalog-top">
         <span className="level-badge">Уровень {gameCase.level}</span>
-        <span className="case-id-badge">{gameCase.id}</span>
+        <span className="case-id-badge">{locked ? 'Заблокирован' : gameCase.id}</span>
       </div>
       <h3>{gameCase.title}</h3>
       <p className="page-description">{gameCase.product.description}</p>
@@ -24,9 +25,15 @@ export function CaseCatalogCard({ gameCase }: CaseCatalogCardProps) {
         ))}
       </div>
       <div className="page-actions">
-        <Link className="primary-button" to={appPaths.case(gameCase.id)}>
-          Открыть кейс
-        </Link>
+        {locked ? (
+          <span className="secondary-button case-card-locked-action">
+            Откроется после прохождения предыдущих уровней
+          </span>
+        ) : (
+          <Link className="primary-button" to={appPaths.case(gameCase.id)}>
+            Открыть кейс
+          </Link>
+        )}
       </div>
     </article>
   );
