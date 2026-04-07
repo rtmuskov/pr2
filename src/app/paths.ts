@@ -4,6 +4,7 @@ export const appPaths = {
   register: '/register',
   tutorial: '/tutorial',
   levels: '/levels',
+  leaderboard: '/leaderboard',
   profile: '/profile',
   admin: '/admin',
   case: (caseId: string) => `/case/${caseId}`,

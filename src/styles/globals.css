@@ -631,6 +631,11 @@ button {
   border-bottom: 0;
 }
 
+.leaderboard-current-user {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 16px;
+}
+
 .auth-card {
   max-width: 720px;
 }

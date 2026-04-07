@@ -6,9 +6,16 @@ export function errorMiddleware(
   response: Response,
   _next: NextFunction,
 ) {
-  console.error(error);
+  const statusCode =
+    typeof (error as Error & { statusCode?: number }).statusCode === 'number'
+      ? (error as Error & { statusCode: number }).statusCode
+      : 500;
 
-  response.status(500).json({
-    message: 'Internal server error',
+  if (statusCode >= 500) {
+    console.error(error);
+  }
+
+  response.status(statusCode).json({
+    message: statusCode >= 500 ? 'Internal server error' : error.message,
   });
 }

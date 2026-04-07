@@ -1,0 +1,24 @@
+node:events:485
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (C:\Users\Артём\OneDrive\Desktop\какие то коды\Симулятор долбаеба\backend\node_modules\express\lib\application.js:635:24)
+    at file:///C:/Users/%D0%90%D1%80%D1%82%D1%91%D0%BC/OneDrive/Desktop/%D0%BA%D0%B0%D0%BA%D0%B8%D0%B5%20%D1%82%D0%BE%20%D0%BA%D0%BE%D0%B4%D1%8B/%D0%A1%D0%B8%D0%BC%D1%83%D0%BB%D1%8F%D1%82%D0%BE%D1%80%20%D0%B4%D0%BE%D0%BB%D0%B1%D0%B0%D0%B5%D0%B1%D0%B0/backend/dist/server.js:3:5
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1975:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v23.11.0

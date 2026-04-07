@@ -17,6 +17,7 @@ export function AppLayout() {
           { to: appPaths.home, label: 'Главная' },
           { to: appPaths.tutorial, label: 'Обучение' },
           { to: appPaths.levels, label: 'Уровни' },
+          { to: appPaths.leaderboard, label: 'Рейтинг' },
         ]
       : guestNavigationItems),
     ...(user ? [{ to: appPaths.profile, label: 'Профиль' }] : []),

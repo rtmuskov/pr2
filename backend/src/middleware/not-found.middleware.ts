@@ -1,10 +1,10 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 export function notFoundMiddleware(
   request: Request,
-  _response: Response,
-  next: NextFunction,
+  response: Response,
 ) {
-  const error = new Error(`Route not found: ${request.method} ${request.originalUrl}`);
-  next(error);
+  response.status(404).json({
+    message: `Route not found: ${request.method} ${request.originalUrl}`,
+  });
 }

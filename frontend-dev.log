@@ -1,0 +1,15 @@
+
+> qa-inspector-game@0.1.0 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m487[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m16:53:00[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ProfilePage/ProfilePage.tsx[22m
+[2m16:53:00[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/globals.css[22m
+[2m16:53:00[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ProfilePage/ProfilePage.tsx[22m
+[2m16:58:03[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ProfilePage/ProfilePage.tsx[22m
+[2m16:58:03[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/AppLayout.tsx[22m
+[2m16:58:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/routes.tsx, /src/components/auth/RequireAdmin.tsx, /src/components/layout/AppLayout.tsx, /src/pages/LoginPage/LoginPage.tsx, /src/pages/CasePage/CasePage.tsx, /src/pages/LevelSelectPage/LevelSelectPage.tsx, /src/pages/TutorialPage/TutorialPage.tsx, /src/components/auth/RequireAuth.tsx, /src/pages/HomePage/HomePage.tsx, /src/pages/ResultPage/ResultPage.tsx, /src/pages/RegisterPage/RegisterPage.tsx, /src/pages/ProfilePage/ProfilePage.tsx, /src/components/case/CaseCatalogCard.tsx[22m
+[2m16:58:42[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/routes.tsx[22m

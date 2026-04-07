@@ -40,6 +40,34 @@ function getComputedStats(
   };
 }
 
+function toLeaderboardEntry(
+  item: {
+    userId: string;
+    displayName: string;
+    totalScore: number;
+    accuracy: number;
+    casesCompleted: number;
+    currentLevel: number;
+    user: {
+      username: string;
+    };
+  },
+  index: number,
+  currentUserId?: string,
+) {
+  return {
+    rank: index + 1,
+    userId: item.userId,
+    username: item.user.username,
+    displayName: item.displayName,
+    totalScore: item.totalScore,
+    accuracy: item.accuracy,
+    casesCompleted: item.casesCompleted,
+    currentLevel: item.currentLevel,
+    isCurrentUser: currentUserId === item.userId,
+  };
+}
+
 function mergeUnlockedLevels(existingLevels: number[], completedLevel: number): number[] {
   const mergedLevels = new Set<number>(existingLevels);
 
@@ -148,44 +176,68 @@ export async function saveGameResult(userId: string, input: SubmitGameResultInpu
 }
 
 export async function getProfileInfoPayload(userId: string) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      role: true,
-      profile: {
-        select: {
-          displayName: true,
-          avatarUrl: true,
-          totalScore: true,
-          accuracy: true,
-          casesCompleted: true,
-          correctAnswers: true,
-          currentLevel: true,
+  const [user, leaderboardProfiles] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        profile: {
+          select: {
+            displayName: true,
+            avatarUrl: true,
+            totalScore: true,
+            accuracy: true,
+            casesCompleted: true,
+            correctAnswers: true,
+            currentLevel: true,
+          },
+        },
+        progress: {
+          select: {
+            completedCaseIds: true,
+            unlockedLevels: true,
+            lastPlayedAt: true,
+          },
+        },
+        gameResults: {
+          select: {
+            caseId: true,
+            isCorrect: true,
+            scoreEarned: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
         },
       },
-      progress: {
-        select: {
-          completedCaseIds: true,
-          unlockedLevels: true,
-          lastPlayedAt: true,
+    }),
+    prisma.userProfile.findMany({
+      take: 10,
+      orderBy: [
+        { totalScore: 'desc' },
+        { accuracy: 'desc' },
+        { casesCompleted: 'desc' },
+        { currentLevel: 'desc' },
+      ],
+      select: {
+        userId: true,
+        displayName: true,
+        totalScore: true,
+        accuracy: true,
+        casesCompleted: true,
+        currentLevel: true,
+        user: {
+          select: {
+            username: true,
+          },
         },
       },
-      gameResults: {
-        select: {
-          caseId: true,
-          isCorrect: true,
-          scoreEarned: true,
-          createdAt: true,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      },
-    },
-  });
+    }),
+  ]);
 
   if (!user) {
     return null;
@@ -218,5 +270,8 @@ export async function getProfileInfoPayload(userId: string) {
       scoreEarned: result.scoreEarned,
       createdAt: result.createdAt.toISOString(),
     })),
+    leaderboard: leaderboardProfiles.map((item, index) =>
+      toLeaderboardEntry(item, index, userId),
+    ),
   };
 }

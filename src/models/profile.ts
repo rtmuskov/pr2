@@ -23,9 +23,22 @@ export type PlayerGameResult = {
   createdAt: string;
 };
 
+export type LeaderboardEntry = {
+  rank: number;
+  userId: string;
+  username: string;
+  displayName: string;
+  totalScore: number;
+  accuracy: number;
+  casesCompleted: number;
+  currentLevel: number;
+  isCurrentUser: boolean;
+};
+
 export type PlayerProfileResponse = {
   user: AuthUser;
   profile: PlayerProfile | null;
   progress: PlayerProgress | null;
   results: PlayerGameResult[];
+  leaderboard: LeaderboardEntry[];
 };

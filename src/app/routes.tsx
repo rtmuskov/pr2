@@ -7,6 +7,7 @@ import { AppLayout } from '../components/layout/AppLayout';
 import { AdminPage } from '../pages/AdminPage/AdminPage';
 import { CasePage } from '../pages/CasePage/CasePage';
 import { HomePage } from '../pages/HomePage/HomePage';
+import { LeaderboardPage } from '../pages/LeaderboardPage/LeaderboardPage';
 import { LevelSelectPage } from '../pages/LevelSelectPage/LevelSelectPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
@@ -23,6 +24,14 @@ export function AppRoutes() {
         <Route path={appPaths.register} element={<RegisterPage />} />
         <Route path={appPaths.tutorial} element={<TutorialPage />} />
         <Route path={appPaths.levels} element={<LevelSelectPage />} />
+        <Route
+          path={appPaths.leaderboard}
+          element={
+            <RequireAuth>
+              <LeaderboardPage />
+            </RequireAuth>
+          }
+        />
         <Route path="/case/:caseId" element={<CasePage />} />
         <Route path="/result/:caseId" element={<ResultPage />} />
         <Route

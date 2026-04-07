@@ -16,8 +16,18 @@ app.use(
 );
 app.use(express.json());
 
+app.get('/', (_request, response) => {
+  response.json({
+    message: 'Backend server is running. Use /health or /api/* endpoints.',
+  });
+});
+
 app.get('/health', (_request, response) => {
   response.json({ status: 'ok' });
+});
+
+app.get('/favicon.ico', (_request, response) => {
+  response.status(204).end();
 });
 
 app.use('/api', apiRouter);
