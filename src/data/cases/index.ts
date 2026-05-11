@@ -1,5 +1,5 @@
 import case101 from './level-1/case-101.json';
-import case102 from './level-1/case-102.json';
+import case103 from './level-1/case-103.json';
 import case201 from './level-2/case-201.json';
 import case202 from './level-2/case-202.json';
 import case301 from './level-3/case-301.json';
@@ -11,7 +11,7 @@ import case502 from './level-5/case-502.json';
 
 export const rawCases = [
   case101,
-  case102,
+  case103,
   case201,
   case202,
   case301,
